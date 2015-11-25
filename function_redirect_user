@@ -1,0 +1,29 @@
+<?php
+//Funktion för att antingen skicka användare till webbsida beroende på ifall kategorier för awesome vision är inlagda eller ej
+$mysqli = new mysqli("localhost", "root", "", "awesomevision");
+if ($mysqli->connect_errno) {
+    echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+}
+$url1 = "undefinedawesome.php";
+$url2 = "main_awesome.php";
+
+if ($result = $mysqli->query("SELECT category FROM planet_awesome")) {
+
+    /* determine number of rows result set */
+    $row_cnt = $result->num_rows;
+
+   if ($row_cnt > 0){
+header('Location: ' . $url1);
+    
+}
+    else {
+      header('Location: ' . $url2);
+}
+    /* close result set */
+    $result->close();
+}
+
+/* close connection */
+$mysqli->close();
+
+?>
